@@ -1,4 +1,4 @@
-# Use Python 3.8 base image (matches your development)
+# Use Python 3.8 base image
 FROM python:3.8-slim
 
 # Set working directory

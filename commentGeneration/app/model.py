@@ -1,7 +1,5 @@
 import torch
 import logging
-import re
-import time
 from typing import Tuple
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
@@ -18,10 +16,10 @@ class CommentModelWrapper:
         try:
             self.logger.info(f"Loading comment generation model from {self.model_dir}")
             
-            # Load tokenizer - using Salesforce/codet5-large as base and your fine-tuned model
+            # Load tokenizer - using Salesforce/codet5-large as base and fine-tuned model
             self.tokenizer = AutoTokenizer.from_pretrained("Salesforce/codet5-large")
             
-            # Load your fine-tuned model
+            # Load fine-tuned model
             self.model = AutoModelForSeq2SeqLM.from_pretrained(self.model_dir)
             self.model.to(self.device)
             self.model.eval()
@@ -52,7 +50,7 @@ class CommentModelWrapper:
             raise RuntimeError("Model not loaded")
         
         try:
-            # Preprocess the diff text (same as your training)
+            # Preprocess the diff text
             formatted_diff = self.format_diff_for_model(code_diff)
             
             # Tokenize the input
@@ -66,19 +64,19 @@ class CommentModelWrapper:
             # Move to device
             inputs = inputs.to(self.device)
             
-            # Generate comment with same parameters as your script
+            # Generate comment with parameters
             with torch.no_grad():
                 outputs = self.model.generate(
                     inputs,
-                    max_length=128,  # Same as your script
-                    num_beams=5,     # Same as your script  
+                    max_length=128,  
+                    num_beams=5,     
                     early_stopping=True
                 )
             
             # Decode the output
             comment = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
             
-            # Simple confidence calculation (you can improve this)
+            # Simple confidence calculation
             confidence = self._calculate_confidence(comment, len(formatted_diff))
             
             return comment, confidence

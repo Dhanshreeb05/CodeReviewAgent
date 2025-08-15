@@ -76,7 +76,7 @@ class QualityModelWrapper:
             with open(f"{self.model_dir}/model_config.json", 'r') as f:
                 self.config = json.load(f)
             
-            # Always rebuild tokenizer to avoid compatibility issues
+            # rebuild tokenizer to avoid compatibility issues
             self.logger.info("Loading original CodeBERT tokenizer and adding special tokens")
             self.tokenizer = AutoTokenizer.from_pretrained(self.config['model_name'])
             
@@ -119,7 +119,7 @@ class QualityModelWrapper:
         # Clean up whitespace
         patch = re.sub(r'\s+', ' ', patch_text)
         
-        # Process each line (same logic as your notebook)
+        # Process each line
         lines = patch.split('\n')
         processed_lines = []
         
@@ -140,7 +140,7 @@ class QualityModelWrapper:
         
         processed_patch = ' '.join(processed_lines)
         
-        # Extract numerical features (same as your training)
+        # Extract numerical features
         patch_length = len(patch_text)
         num_additions = max(0, patch_text.count('+') - patch_text.count('@@'))
         num_deletions = max(0, patch_text.count('-') - patch_text.count('@@'))

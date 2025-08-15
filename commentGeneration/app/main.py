@@ -5,7 +5,7 @@ import uuid
 import logging
 from datetime import datetime
 
-from .schemas import CommentRequest, CommentResponse, ErrorResponse
+from .schemas import CommentRequest, CommentResponse
 from .model import model_wrapper
 
 # Configure logging
