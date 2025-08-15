@@ -1,0 +1,48 @@
+
+\begin{table}[h]
+\centering
+\caption{Dataset Overview and Composition}
+\label{tab:dataset_overview}
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Dataset} & \textbf{Samples} & \textbf{Languages} & \textbf{Projects} \\
+\hline
+Original (Full) & 328,340 & 10 & 309 \\
+Filtered (Py+Undefined) & 180,964 & 2 & 50 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\caption{Dataset Split Distribution (Filtered)}
+\label{tab:split_distribution}
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Split} & \textbf{Samples} & \textbf{No Review (0)} & \textbf{Review Needed (1)} \\
+\hline
+Train & 172,548 & 39,630 (23.0\%) & 132,918 (77.0\%) \\
+Test & 4,196 & 2,163 (51.5\%) & 2,033 (48.5\%) \\
+Val & 4,220 & 2,167 (51.4\%) & 2,053 (48.6\%) \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\caption{Numerical Feature Statistics}
+\label{tab:feature_stats}
+\begin{tabular}{|l|r|r|r|r|r|}
+\hline
+\textbf{Feature} & \textbf{Mean} & \textbf{Median} & \textbf{Std} & \textbf{Min} & \textbf{Max} \\
+\hline
+Patch Length & 1804.8 & 746.0 & 4534.4 & 24 & 728,745 \\
+Additions & 37.6 & 8.0 & 106.9 & 1 & 15,664 \\
+Deletions & 11.5 & 3.0 & 67.3 & 1 & 4,744 \\
+Total Changes & 49.1 & 14.0 & 144.9 & 2 & 19,544 \\
+Message Length & 84.2 & 60.0 & 96.2 & 0 & 1,529 \\
+\hline
+\end{tabular}
+\end{table}
