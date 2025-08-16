@@ -1,0 +1,86 @@
+{
+  "original": {
+    "total_samples": 328340,
+    "languages": 10,
+    "top_languages": {
+      "undefined": 132918,
+      "py": 48046,
+      "go": 40859,
+      "java": 29068,
+      "js": 23789,
+      "cpp": 17852,
+      ".cs": 14222,
+      "php": 8225,
+      "rb": 8141,
+      "c": 5220
+    },
+    "projects": 309,
+    "label_distribution": {
+      "1": 164170,
+      "0": 164170
+    }
+  },
+  "filtered": {
+    "total_samples": 180964,
+    "train_samples": 172548,
+    "test_samples": 4196,
+    "val_samples": 4220,
+    "language_distribution": {
+      "undefined": 132918,
+      "py": 48046
+    },
+    "projects": 50,
+    "feature_stats": {
+      "patch_length": {
+        "mean": 1804.777021949117,
+        "median": 746.0,
+        "std": 4534.412265169144,
+        "min": 24.0,
+        "max": 728745.0
+      },
+      "num_additions": {
+        "mean": 37.631656019981875,
+        "median": 8.0,
+        "std": 106.88529069745857,
+        "min": 1.0,
+        "max": 15664.0
+      },
+      "num_deletions": {
+        "mean": 11.469596162772707,
+        "median": 3.0,
+        "std": 67.33065970098372,
+        "min": 1.0,
+        "max": 4744.0
+      },
+      "total_changes": {
+        "mean": 49.10125218275458,
+        "median": 14.0,
+        "std": 144.9221193653131,
+        "min": 2.0,
+        "max": 19544.0
+      },
+      "message_length": {
+        "mean": 84.17106717358149,
+        "median": 60.0,
+        "std": 96.17004002486841,
+        "min": 0.0,
+        "max": 1529.0
+      }
+    },
+    "train_label_distribution": {
+      "no_review": 39630,
+      "review_needed": 132918,
+      "total": 172548
+    },
+    "test_label_distribution": {
+      "no_review": 2163,
+      "review_needed": 2033,
+      "total": 4196
+    },
+    "val_label_distribution": {
+      "no_review": 2167,
+      "review_needed": 2053,
+      "total": 4220
+    }
+  }
+}
