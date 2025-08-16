@@ -397,6 +397,7 @@ for i, diff in enumerate(patch):
     result = predict_code_review(model, tokenizer, diff)
     
     print(f"Prediction: {result['prediction_label']}")
+    print(f"Confidence: {result['confidence']:.2f}")
     
     
     if result['prediction_label'] == 'Review Needed':
