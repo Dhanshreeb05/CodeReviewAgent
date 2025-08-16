@@ -268,18 +268,19 @@ def format_diff_for_model(patch: str) -> str:
 # ==============================================================================
 # Define the checkpoints for the tokenizer and your local model
 # Note: Use the tokenizer that matches the model you want to use (e.g., codet5-large)
-TOKENIZER_CHECKPOINT = "Salesforce/codet5-base"
-# IMPORTANT: Update this path to your best-performing model folder
-LOCAL_MODEL_PATH = "content/codet5-finetuned-python-reviewer/final_model"
+TOKENIZER_CHECKPOINT = "Salesforce/codet5-large"
 
-print(f"--- Loading model from: {LOCAL_MODEL_PATH} ---")
+# !!!IMPORTANT: Update this path to your best-performing model folder for Comment Generation
+COMMENT_GENERATION_MODEL_PATH = "commentGeneration/models"
+
+print(f"--- Loading model from: {COMMENT_GENERATION_MODEL_PATH} ---")
 
 try:
     # Load the tokenizer from the Hub to avoid corruption issues
     tokenizer_comment = AutoTokenizer.from_pretrained(TOKENIZER_CHECKPOINT)
 
     # Load your fine-tuned model from the local directory
-    model_comment = AutoModelForSeq2SeqLM.from_pretrained(LOCAL_MODEL_PATH)
+    model_comment = AutoModelForSeq2SeqLM.from_pretrained(COMMENT_GENERATION_MODEL_PATH)
 
     # Move model to GPU if available for faster generation
     if torch.cuda.is_available():
@@ -288,7 +289,7 @@ try:
 
     print("✅ Model and tokenizer loaded successfully!")
 except OSError:
-    print(f"❌ Error: Model not found at '{LOCAL_MODEL_PATH}'.")
+    print(f"❌ Error: Model not found at '{COMMENT_GENERATION_MODEL_PATH}'.")
     print("Please make sure the path is correct.")
     exit()
 
@@ -328,9 +329,10 @@ def generate_review_comment(diff_text: str):
     return comment
 
 
-# Load your trained model
-model, tokenizer, config = load_trained_model()
-
+# Load trained model
+# !!!CHANGE THIS PATH TO MODEL DIRECTORY OF CODE REVIEWER MODEL
+CODE_REVIEWER_MODEL_PATH = "codeReviewer/models"
+model, tokenizer, config = load_trained_model(CODE_REVIEWER_MODEL_PATH)
 
 
 
