@@ -10,7 +10,7 @@ QUALITY_API_URL = os.getenv("QUALITY_API_URL", "https://quality-service-58674880
 COMMENT_API_URL = os.getenv("COMMENT_API_URL", "https://comment-service-586748801796.us-central1.run.app")
 
 def call_quality_api(code_diff: str) -> dict:
-    """Call the quality estimation API"""
+    """Call the Code Reviewer API"""
     try:
         response = requests.post(
             f"{QUALITY_API_URL}/predict-quality",
@@ -77,6 +77,7 @@ def main():
     # Sample diffs for testing
     sample_diffs = {
         "Simple Change": """@@ -10,7 +10,7 @@ def hello():
+        + import re
 print("Hello, world!")""",
         
         "Variable Rename": """@@ -8,5 +8,5 @@
