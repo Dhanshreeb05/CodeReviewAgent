@@ -337,22 +337,24 @@ model, tokenizer, config = load_trained_model(CODE_REVIEWER_MODEL_PATH)
 
 
 # Make a prediction
-patch = [ '''@@ -10,7 +10,7 @@
- def hello():
--    print("Hello world")
-+    print("Hello, world!")
-''',
-"""
-@@ -15,3 +15,7 @@
-def connect_database(host, port):
--    connection = create_connection(host, port)
--    return connection
-+    try:
-+        connection = create_connection(host, port)
-+        return connection
-+    except ConnectionError as e:
-+        return None
+patch = [  
+   """
+@@ -5,2 +5,4 @@
++MAX_RETRIES = 3
++TIMEOUT = 30
+class APIClient:
 """,
+   """
+@@ -5,2 +5,2 @@
+-def calculate_discount(price, discount):
++def calculate_discount(price: float, discount: float) -> float:
+    return price * (1 - discount)
+""",
+'''@@ -10,7 +10,7 @@
+ def hello():
+    + import re
+    print("Hello, world!")
+''',
    """
 @@ -22,6 +22,3 @@
 def filter_numbers(numbers):
@@ -364,34 +366,11 @@ def filter_numbers(numbers):
 +    return [num for num in numbers if num > 0]
 """,
    """
-@@ -5,2 +5,2 @@
--def calculate_discount(price, discount):
-+def calculate_discount(price: float, discount: float) -> float:
-    return price * (1 - discount)
-""",
-   """
 @@ -30,5 +30,3 @@
 def process_payment(amount):
 -    print(f"Processing: {amount}")
     result = payment_gateway.charge(amount)
     return result
-""",
-   """
-@@ -12,1 +12,4 @@
-def set_age(self, age):
-+    if age < 0:
-+        raise ValueError("Age must be positive")
-    self.age = age
-""",
-   """
-@@ -25,7 +25,2 @@
-def find_max(values):
--    max_val = values[0]
--    for val in values:
--        if val > max_val:
--            max_val = val
--    return max_val
-+    return max(values)
 """,
    """
 @@ -3,1 +3,2 @@
@@ -403,47 +382,6 @@ import json
 def divide(a, b):
 -    return a / b
 +    return a / b if b != 0 else None
-""",
-   """
-@@ -1,5 +1,3 @@
-import os
--import random
--import time
-import json
-""",
-   """
-@@ -5,2 +5,4 @@
-+MAX_RETRIES = 3
-+TIMEOUT = 30
-class APIClient:
-""",
-   """
-@@ -20,5 +20,3 @@
-def print_items(items):
--    i = 0
--    for item in items:
--        print(f"{i}: {item}")
--        i += 1
-+    for i, item in enumerate(items):
-+        print(f"{i}: {item}")
-""",
-   """
-@@ -33,3 +33,3 @@
--def fetch_data(url):
-+async def fetch_data(url):
-    response = requests.get(url)
-""",
-   """
-@@ -8,1 +8,3 @@
-def validate_password(password):
-+    \"\"\"Check if password is valid.\"\"\"
-    return len(password) >= 8
-""",
-   """
-@@ -18,3 +18,3 @@
--def send_email(to, subject, body):
-+def send_email(to, subject, body, cc=None):
-    message = create_message(to, subject, body)
 """
 ]
 
@@ -451,17 +389,22 @@ def validate_password(password):
 
 for i, diff in enumerate(patch):
     
+    print("-" * 50)
+    print(f"Prediction Result for {i+1}th patch:")
+    print("-" * 50)
+    print(f"Patch Text:\n{diff}\n")
+    
     result = predict_code_review(model, tokenizer, diff)
     
-    print(f"Prediction Result: {i}")
+    print(f"Prediction: {result['prediction_label']}")
+    
     
     if result['prediction_label'] == 'Review Needed':
-        print(f"Prediction: {result['prediction_label']}")
-        print(diff)
         comment = generate_review_comment(diff)
-        print(f"[{i}] {comment}")
-    else:
-        print(f"Prediction: {result['prediction_label']}")  
-        print(diff)  
+        print(f"Generated Comment: {comment}")
+        # print(f"[{i}] {comment}")
+    
+    print("-" * 50)
+    print("\n\n")
 
     # print(f"Confidence: {result['confidence']:.2f}")
